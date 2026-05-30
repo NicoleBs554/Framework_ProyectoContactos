@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { CONTACTS_STORAGE_KEY } from '../utils/constants';
 
@@ -38,6 +38,7 @@ const sampleContacts = [
 export const ContactProvider = ({ children }) => {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const storedContacts = localStorage.getItem(STORAGE_KEY);
@@ -61,28 +62,48 @@ export const ContactProvider = ({ children }) => {
     }
   }, [contacts, loading]);
 
-  const addContact = (contactData) => {
-    const newContact = { ...contactData, id: uuidv4() };
-    setContacts((prev) => [...prev, newContact]);
-  };
+  const addContact = useCallback((contactData) => {
+    try {
+      const newContact = { ...contactData, id: uuidv4() };
+      setContacts((prev) => [...prev, newContact]);
+      setError(null);
+    } catch (err) {
+      console.error('Error al agregar contacto:', err);
+      setError('No se pudo agregar el contacto.');
+    }
+  }, []);
 
-  const updateContact = (id, updatedData) => {
-    setContacts((prev) =>
-      prev.map((contact) => (contact.id === id ? { ...updatedData, id } : contact))
-    );
-  };
+  const updateContact = useCallback((id, updatedData) => {
+    try {
+      setContacts((prev) =>
+        prev.map((contact) => (contact.id === id ? { ...updatedData, id } : contact))
+      );
+      setError(null);
+    } catch (err) {
+      console.error('Error al actualizar contacto:', err);
+      setError('No se pudo actualizar el contacto.');
+    }
+  }, []);
 
-  const deleteContact = (id) => {
-    setContacts((prev) => prev.filter((contact) => contact.id !== id));
-  };
+  const deleteContact = useCallback((id) => {
+    try {
+      setContacts((prev) => prev.filter((contact) => contact.id !== id));
+      setError(null);
+    } catch (err) {
+      console.error('Error al eliminar contacto:', err);
+      setError('No se pudo eliminar el contacto.');
+    }
+  }, []);
 
-  const getContact = (id) => contacts.find((contact) => contact.id === id);
-
-  return (
-    <ContactContext.Provider
-      value={{ contacts, loading, addContact, updateContact, deleteContact, getContact }}
-    >
-      {children}
-    </ContactContext.Provider>
+  const getContact = useCallback(
+    (id) => contacts.find((contact) => contact.id === id),
+    [contacts]
   );
+
+  const value = useMemo(
+    () => ({ contacts, loading, error, addContact, updateContact, deleteContact, getContact }),
+    [contacts, loading, error, addContact, updateContact, deleteContact, getContact]
+  );
+
+  return <ContactContext.Provider value={value}>{children}</ContactContext.Provider>;
 };
