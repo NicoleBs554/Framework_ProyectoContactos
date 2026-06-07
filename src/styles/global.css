@@ -1,6 +1,6 @@
+/* ===== RESET Y BASE ===== */
 :root {
   color-scheme: dark;
-  /* Fondo y texto base de alto contraste */
   --bg: #0a0c10;
   --surface: #1a1e26;
   --surface-strong: #252b37;
@@ -52,6 +52,84 @@ button {
   cursor: pointer;
 }
 
+/* ===== LOGIN CON ALTO CONTRASTE (bloque solicitado) ===== */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #0a0c10;  /* Fondo oscuro sólido */
+}
+
+.login-form {
+  background: #1e293b;  /* Fondo del formulario más oscuro que el body */
+  padding: 2rem;
+  border-radius: 1.5rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5);
+  border: 1px solid #334155;
+}
+
+.login-form h2 {
+  color: #facc15;       /* Título amarillo brillante */
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.form-group label {
+  color: #e2e8f0;       /* Texto de las etiquetas: gris muy claro */
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #475569;
+  background: #0f172a;   /* Fondo oscuro para inputs */
+  color: #f1f5f9;        /* Texto blanco/gris claro */
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #facc15;
+  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.3);
+}
+
+button[type="submit"] {
+  width: 100%;
+  background: #facc15;
+  color: #0f172a;
+  font-weight: bold;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: 0.2s;
+}
+
+button[type="submit"]:hover {
+  background: #eab308;
+  transform: scale(1.02);
+}
+
+.error-message {
+  background: #7f1a1a;
+  color: #fecaca;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* ===== HEADER ===== */
 .app-header {
   display: flex;
   flex-wrap: wrap;
@@ -64,7 +142,7 @@ button {
 .header-title h1 {
   margin: 0;
   font-size: clamp(1.75rem, 2vw, 2.4rem);
-  color: #facc15; /* amarillo para contraste */
+  color: #facc15;
 }
 
 .header-title p {
@@ -87,7 +165,7 @@ button {
 .btn-primary,
 button.btn-primary {
   border: none;
-  background: var(--primary);
+  background: #0f766e;
   color: white;
   padding: 0.85rem 1.2rem;
   border-radius: 12px;
@@ -113,228 +191,110 @@ button.btn-secondary {
   background: #2d3748;
 }
 
-.page-loading,
-.login-container,
-.contacts-page {
-  padding: 1rem 1.5rem 2rem;
-}
-
-.login-container {
-  min-height: calc(100vh - 2rem);
-  display: grid;
-  place-items: center;
-}
-
-.login-form {
-  width: min(420px, 100%);
-  background: var(--surface);
-  padding: 2rem;
-  border-radius: 24px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-}
-
-.login-form h2 {
-  margin: 0 0 1rem;
-  color: #facc15;
-}
-
-.form-group {
-  display: grid;
-  gap: 0.45rem;
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  font-weight: 600;
-  color: #d1d5db;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 0.95rem 1rem;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: #f1f5f9;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.3);
-}
-
-button[type='submit'] {
-  width: 100%;
-  border-radius: 14px;
-  border: none;
-  background: var(--primary);
-  color: white;
-  padding: 0.95rem 1rem;
-  margin-top: 0.5rem;
-  font-weight: bold;
-}
-
-.error-message {
-  background: #7f1a1a;
-  color: #fecaca;
-  border-radius: 12px;
-  padding: 0.9rem 1rem;
-  margin-bottom: 1rem;
-}
-
+/* ===== CONTACTOS GRID Y TARJETAS ===== */
 .contacts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem;
 }
 
-/* Tarjetas de contacto */
 .contact-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 24px;
-  box-shadow: var(--shadow);
-  padding: 1.15rem;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  border-radius: 1.5rem;
+  padding: 1.25rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
 }
 
 .contact-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   border-color: var(--accent);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
-.contact-card img,
-.modal-photo,
-.avatar-block img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 50%;
-  background: var(--surface-strong);
-}
-
-.contact-photo {
+.contact-card img, .modal-photo {
   width: 72px;
   height: 72px;
-  border-radius: 50%;
   object-fit: cover;
-  margin-right: 1rem;
+  border-radius: 50%;
 }
 
-.contact-summary,
-.card-body,
-.info-block {
-  gap: 0.45rem;
-}
-
-.contact-actions,
-.actions-block {
+.contact-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.75rem;
   margin-top: 1rem;
 }
 
-.contact-actions button,
-.actions-block button {
-  padding: 0.75rem 0.95rem;
-  border-radius: 12px;
-  border: 1px solid var(--border);
+.contact-actions button {
+  padding: 0.5rem 1rem;
   background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
   color: #e2e8f0;
 }
 
-.contact-actions button:hover,
-.actions-block button:hover {
+.contact-actions button:hover {
   background: var(--primary);
   color: white;
 }
 
-.contact-card-v2 .card-header,
-.contact-card-v3 .info-block,
-.contact-card-v2 .card-body {
+/* Versión 1 */
+.contact-card-v1 {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.contact-card-v2 .card-header {
-  flex-direction: row;
-  align-items: center;
-}
-
-.contact-card-v2 .card-header img,
-.contact-card-v4 .card-front img {
-  width: 72px;
-  height: 72px;
-  margin-right: 1rem;
-}
-
-.notes-preview,
-.modal-notes {
-  color: #cbd5e6;
-}
-
-.contact-card-v3 {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 1rem;
 }
 
-.avatar-block {
-  display: grid;
-  place-items: center;
+/* Versión 2 */
+.contact-card-v2 .card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Versión 3 */
+.contact-card-v3 {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .avatar-placeholder {
   width: 72px;
   height: 72px;
-  border-radius: 50%;
   background: var(--primary-soft);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
   color: var(--accent);
-  display: grid;
-  place-items: center;
-  font-weight: 700;
-  font-size: 1.3rem;
 }
 
-.card-inner {
+/* Versión 4 */
+.contact-card-v4 .card-inner {
   position: relative;
+  border-radius: 1rem;
   overflow: hidden;
-  border-radius: 24px;
 }
 
-.card-front,
-.card-back {
+.contact-card-v4 .card-front,
+.contact-card-v4 .card-back {
   padding: 1rem;
 }
 
-.card-front {
-  background: var(--surface);
-}
-
-.card-back {
+.contact-card-v4 .card-back {
   background: #0f766e;
-  color: white;
-  display: grid;
-  gap: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
 }
 
-.card-back button {
-  width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(0, 0, 0, 0.2);
-  color: white;
-}
-
-.card-back button:hover {
-  background: #facc15;
-  color: #0a0c10;
-}
-
+/* ===== MODAL (POPUP) ===== */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -343,112 +303,94 @@ button[type='submit'] {
   display: grid;
   place-items: center;
   padding: 1rem;
-  z-index: 50;
+  z-index: 1000;
 }
 
 .modal-content {
-  width: min(560px, 100%);
   background: var(--surface);
-  border-radius: 24px;
-  padding: 1.75rem;
-  box-shadow: var(--shadow);
-  position: relative;
+  border-radius: 1.5rem;
+  max-width: 550px;
+  width: 100%;
+  padding: 1.5rem;
   border: 1px solid var(--border);
-}
-
-.form-modal {
-  padding: 2rem;
+  position: relative;
 }
 
 .modal-close {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 40px;
-  height: 40px;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: transparent;
   border: none;
-  border-radius: 50%;
-  background: var(--surface-strong);
-  color: #facc15;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   cursor: pointer;
-}
-
-.modal-close:hover {
-  background: var(--danger);
-  color: white;
+  color: #facc15;
 }
 
 .modal-header {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .modal-header h2 {
-  margin: 0;
   color: #facc15;
 }
 
-.modal-body p {
-  margin: 0.75rem 0;
+.modal-notes {
+  background: var(--bg);
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  margin-top: 0.5rem;
 }
 
+/* ===== FORMULARIO ===== */
 .contact-form {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
+}
+
+.contact-form label {
+  font-weight: 600;
+  color: #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: #f1f5f9;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
 }
 
 .form-error {
   background: #7f1a1a;
   color: #fecaca;
-  border: 1px solid #ef4444;
-  border-radius: 16px;
-  padding: 0.9rem 1rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
 }
 
-.contact-form label {
-  display: grid;
-  gap: 0.5rem;
-  font-weight: 600;
-  color: #d1d5db;
-}
-
-.contact-form input,
-.contact-form textarea,
-.contact-form select {
-  width: 100%;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 0.9rem 1rem;
-  background: var(--bg);
-  color: #f1f5f9;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-
-.form-actions {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-
+/* ===== RESPONSIVE ===== */
 @media (max-width: 640px) {
   .app-header {
-    padding-top: 1rem;
+    flex-direction: column;
+    align-items: stretch;
   }
-
-  .contact-card-v3 {
-    grid-template-columns: 1fr;
-  }
-
-  .header-actions {
-    width: 100%;
+  .contacts-grid {
+    margin: 1rem;
+    gap: 1rem;
   }
 }
