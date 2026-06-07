@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useContacts } from '../contexts/ContactContext';
+import { useAuth } from '../contexts/AuthContext';
 import Header from '../components/layout/Header';
-import ContactForm from '../components/contacts/ContactForm';
 import ContactModal from '../components/contacts/ContactModal';
+import ContactForm from '../components/contacts/ContactForm';
 import ContactCardV1 from '../components/contacts/ContactCardV1';
 import ContactCardV2 from '../components/contacts/ContactCardV2';
 import ContactCardV3 from '../components/contacts/ContactCardV3';
@@ -10,20 +11,19 @@ import ContactCardV4 from '../components/contacts/ContactCardV4';
 
 const ContactsPage = () => {
   const { contacts, addContact, updateContact, deleteContact } = useContacts();
+  const { logout } = useAuth();
+  const [viewVersion, setViewVersion] = useState('V1');
+  const [selectedContact, setSelectedContact] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [editingContact, setEditingContact] = useState(null);
-  const [selectedContact, setSelectedContact] = useState(null);
-  const [viewVersion, setViewVersion] = useState('V1');
 
-  // Mapeo de versiones a componentes
   const contactComponents = {
     V1: ContactCardV1,
     V2: ContactCardV2,
     V3: ContactCardV3,
     V4: ContactCardV4,
   };
-
-  const CurrentContactComponent = contactComponents[viewVersion];
+  const CurrentCard = contactComponents[viewVersion];
 
   const handleEdit = (contact) => {
     setEditingContact(contact);
@@ -49,11 +49,11 @@ const ContactsPage = () => {
           setEditingContact(null);
           setShowForm(true);
         }}
+        onLogout={logout}
       />
-
       <div className="contacts-grid">
-        {contacts.map(contact => (
-          <CurrentContactComponent
+        {contacts.map((contact) => (
+          <CurrentCard
             key={contact.id}
             contact={contact}
             onEdit={handleEdit}
@@ -62,15 +62,16 @@ const ContactsPage = () => {
           />
         ))}
       </div>
-
       {showForm && (
         <ContactForm
           contact={editingContact}
           onSave={handleSave}
-          onClose={() => { setShowForm(false); setEditingContact(null); }}
+          onClose={() => {
+            setShowForm(false);
+            setEditingContact(null);
+          }}
         />
       )}
-
       <ContactModal
         contact={selectedContact}
         isOpen={!!selectedContact}

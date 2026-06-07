@@ -9,10 +9,10 @@ const ContactCardV4 = ({ contact, onEdit, onDelete, onViewDetails }) => {
           <h4>{contact.name} {contact.lastname}</h4>
           <p>{contact.phone}</p>
         </div>
-        <div className="card-back" onClick={(event) => event.stopPropagation()}>
-          <button type="button" onClick={() => onEdit(contact)}>Editar</button>
-          <button type="button" onClick={() => onDelete(contact.id)}>Eliminar</button>
-          <button type="button" onClick={() => onViewDetails(contact)}>Ver más</button>
+        <div className="card-back" onClick={(e) => e.stopPropagation()}>
+          <button onClick={() => onEdit(contact)}>Editar</button>
+          <button onClick={() => onDelete(contact.id)}>Eliminar</button>
+          <button onClick={() => onViewDetails(contact)}>Ver más</button>
         </div>
       </div>
     </div>

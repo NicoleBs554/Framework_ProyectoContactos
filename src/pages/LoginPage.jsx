@@ -9,13 +9,13 @@ const LoginPage = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const success = login(username, password);
     if (success) {
       navigate('/contacts');
     } else {
-      setError('Credenciales inválidas. Intenta de nuevo.');
+      setError('Credenciales inválidas. Usuario: admin / Contraseña: 1234');
     }
   };
 
@@ -25,8 +25,9 @@ const LoginPage = () => {
         <h2>Iniciar Sesión</h2>
         {error && <div className="error-message">{error}</div>}
         <div className="form-group">
-          <label>Usuario:</label>
+          <label htmlFor="username">Usuario</label>
           <input
+            id="username"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -34,8 +35,9 @@ const LoginPage = () => {
           />
         </div>
         <div className="form-group">
-          <label>Contraseña:</label>
+          <label htmlFor="password">Contraseña</label>
           <input
+            id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

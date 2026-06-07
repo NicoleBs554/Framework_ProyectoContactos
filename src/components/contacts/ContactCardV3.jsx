@@ -16,9 +16,9 @@ const ContactCardV3 = ({ contact, onEdit, onDelete, onViewDetails }) => {
         <span className="name">{contact.name} {contact.lastname}</span>
         <span className="phone">{contact.phone}</span>
       </div>
-      <div className="actions-block" onClick={(event) => event.stopPropagation()}>
-        <button type="button" onClick={() => onEdit(contact)}>✏️</button>
-        <button type="button" onClick={() => onDelete(contact.id)}>🗑️</button>
+      <div className="contact-actions" onClick={(e) => e.stopPropagation()}>
+        <button onClick={() => onEdit(contact)}>✏️</button>
+        <button onClick={() => onDelete(contact.id)}>🗑️</button>
       </div>
     </div>
   );

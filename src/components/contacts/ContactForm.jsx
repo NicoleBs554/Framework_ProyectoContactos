@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { DEFAULT_AVATAR } from '../../utils/constants';
 
-const DEFAULT_PHOTO = DEFAULT_AVATAR;
-const DEFAULT_FORM_STATE = {
-  name: '',
-  lastname: '',
-  phone: '',
-  nickname: '',
-  notes: '',
-  photo: DEFAULT_PHOTO,
-};
-
 const ContactForm = ({ contact, onSave, onClose }) => {
-  const [formData, setFormData] = useState(DEFAULT_FORM_STATE);
-  const [formError, setFormError] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    lastname: '',
+    phone: '',
+    nickname: '',
+    notes: '',
+    photo: DEFAULT_AVATAR,
+  });
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (contact) {
@@ -23,87 +20,94 @@ const ContactForm = ({ contact, onSave, onClose }) => {
         phone: contact.phone || '',
         nickname: contact.nickname || '',
         notes: contact.notes || '',
-        photo: contact.photo || DEFAULT_PHOTO,
+        photo: contact.photo || DEFAULT_AVATAR,
       });
-    } else {
-      setFormData(DEFAULT_FORM_STATE);
-      setFormError('');
     }
   }, [contact]);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (!formData.name.trim() || !formData.lastname.trim() || !formData.phone.trim()) {
-      setFormError('Nombre, apellido y teléfono son obligatorios.');
+      setError('Nombre, apellido y teléfono son obligatorios');
       return;
     }
-    setFormError('');
+    setError('');
     onSave(formData);
   };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content form-modal" onClick={(event) => event.stopPropagation()}>
-        <button type="button" className="modal-close" onClick={onClose} aria-label="Cerrar formulario">
-          ×
-        </button>
-        <h2>{contact ? 'Editar contacto' : 'Nuevo contacto'}</h2>
-        {formError && (
-          <div className="form-error" role="alert">
-            {formError}
-          </div>
-        )}
+      <div className="modal-content form-modal" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}>×</button>
+        <h2>{contact ? 'Editar Contacto' : 'Nuevo Contacto'}</h2>
+        {error && <div className="form-error">{error}</div>}
         <form onSubmit={handleSubmit} className="contact-form">
           <label>
             Nombre *
             <input
+              type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              aria-required="true"
-              autoFocus
+              required
             />
           </label>
           <label>
             Apellido *
             <input
+              type="text"
               name="lastname"
               value={formData.lastname}
               onChange={handleChange}
-              aria-required="true"
+              required
             />
           </label>
           <label>
             Teléfono *
             <input
+              type="tel"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              aria-required="true"
+              required
             />
           </label>
           <label>
             Apodo
-            <input name="nickname" value={formData.nickname} onChange={handleChange} />
+            <input
+              type="text"
+              name="nickname"
+              value={formData.nickname}
+              onChange={handleChange}
+            />
           </label>
           <label>
-            URL de foto
-            <input name="photo" value={formData.photo} onChange={handleChange} />
+            URL de la foto
+            <input
+              type="url"
+              name="photo"
+              value={formData.photo}
+              onChange={handleChange}
+              placeholder="https://ejemplo.com/foto.jpg"
+            />
           </label>
           <label>
             Notas
-            <textarea name="notes" value={formData.notes} onChange={handleChange} rows="4" />
+            <textarea
+              name="notes"
+              value={formData.notes}
+              onChange={handleChange}
+              rows="3"
+            />
           </label>
           <div className="form-actions">
-            <button type="submit" className="btn-primary">Guardar</button>
-            <button type="button" className="btn-secondary" onClick={onClose}>
-              Cancelar
-            </button>
+            <button type="submit">Guardar</button>
+            <button type="button" onClick={onClose}>Cancelar</button>
           </div>
         </form>
       </div>
